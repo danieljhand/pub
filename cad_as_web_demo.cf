@@ -97,7 +97,7 @@
       "Properties" : {
         "AdjustmentType" : "ChangeInCapacity",
         "AutoScalingGroupName" : { "Ref" : "WebServerGroup" },
-        "Cooldown" : "60",
+        "Cooldown" : "180",
         "ScalingAdjustment" : "1"
       }
     },
@@ -106,7 +106,7 @@
       "Properties" : {
         "AdjustmentType" : "ChangeInCapacity",
         "AutoScalingGroupName" : { "Ref" : "WebServerGroup" },
-        "Cooldown" : "60",
+        "Cooldown" : "180",
         "ScalingAdjustment" : "-1"
       }
     },
@@ -114,13 +114,13 @@
     "CPUAlarmHigh": {
      "Type": "AWS::CloudWatch::Alarm",
      "Properties": {
-        "AlarmDescription": "Scale-up if CPU > 50% for  3 minutes",
+        "AlarmDescription": "Scale-up if CPU > 75% for  5 minutes",
         "MetricName": "CPUUtilization",
         "Namespace": "AWS/EC2",
         "Statistic": "Average",
         "Period": "60",
-        "EvaluationPeriods": "3",
-        "Threshold": "50",
+        "EvaluationPeriods": "5",
+        "Threshold": "75",
         "AlarmActions": [ { "Ref": "WebServerScaleUpPolicy" } ],
         "Dimensions": [
           {
@@ -134,13 +134,13 @@
     "CPUAlarmLow": {
      "Type": "AWS::CloudWatch::Alarm",
      "Properties": {
-        "AlarmDescription": "Scale-down if CPU < 20% for 3 minutes",
+        "AlarmDescription": "Scale-down if CPU < 40% for 5 minutes",
         "MetricName": "CPUUtilization",
         "Namespace": "AWS/EC2",
         "Statistic": "Average",
         "Period": "60",
-        "EvaluationPeriods": "3",
-        "Threshold": "20",
+        "EvaluationPeriods": "5",
+        "Threshold": "40",
         "AlarmActions": [ { "Ref": "WebServerScaleDownPolicy" } ],
         "Dimensions": [
           {
@@ -164,7 +164,7 @@
         "HealthCheck" : {
           "Target" : { "Fn::Join" : [ "", ["HTTP:", { "Ref" : "WebServerPort" }, "/"]]},
           "HealthyThreshold" : "3",
-          "UnhealthyThreshold" : "5",
+          "UnhealthyThreshold" : "3",
           "Interval" : "30",
           "Timeout" : "5"
         }
