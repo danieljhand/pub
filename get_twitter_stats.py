@@ -1,6 +1,8 @@
 import tweepy
 import os
 import json
+from datetime import date
+
 
 # == OAuth Authentication ==
 #
@@ -32,9 +34,9 @@ twitter_friends_count=api.get_user(twitter_user).friends_count
 twitter_followers_count=api.get_user(twitter_user).followers_count
 twitter_statuses_count=api.get_user(twitter_user).statuses_count
 
+today=date.today()
 
-
-obj = {'twitter_friends_count' : twitter_friends_count, 'twitter_followers_count' : twitter_followers_count, 'twitter_statuses_count' : twitter_statuses_count}
+obj = {'date' : today.isoformat(), 'twitter_friends_count' : twitter_friends_count, 'twitter_followers_count' : twitter_followers_count, 'twitter_statuses_count' : twitter_statuses_count}
 
 encoded = json.dumps(obj)
 print encoded
