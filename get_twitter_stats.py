@@ -1,5 +1,6 @@
 import tweepy
 import os
+import json
 
 # == OAuth Authentication ==
 #
@@ -27,6 +28,13 @@ api = tweepy.API(auth)
 # If the authentication was successful, you should
 # see the name of the account print out
 #print api.me().name
-print api.get_user(twitter_user).friends_count
-print api.get_user(twitter_user).followers_count
-print api.get_user(twitter_user).statuses_count
+twitter_friends_count=api.get_user(twitter_user).friends_count
+twitter_followers_count=api.get_user(twitter_user).followers_count
+twitter_statuses_count=api.get_user(twitter_user).statuses_count
+
+
+
+obj = {'twitter_friends_count' : twitter_friends_count, 'twitter_followers_count' : twitter_followers_count, 'twitter_statuses_count' : twitter_statuses_count}
+
+encoded = json.dumps(obj)
+print encoded
